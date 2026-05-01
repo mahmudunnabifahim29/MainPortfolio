@@ -1,0 +1,460 @@
+{% extends "base.html" %}
+
+{% block body %}
+<!-- ═══════════════════════════════════════════════
+     NAVIGATION
+     ═══════════════════════════════════════════════ -->
+<nav class="navbar" id="navbar">
+    <div class="navbar__container">
+        <a href="#hero" class="navbar__logo" id="navLogo">
+            <span class="navbar__logo-bracket">&lt;</span>Fahim<span class="navbar__logo-slash"> /</span><span class="navbar__logo-bracket">&gt;</span>
+        </a>
+        <ul class="navbar__menu" id="navMenu">
+            <li><a href="#hero" class="navbar__link active" data-section="hero">Home</a></li>
+            <li><a href="#about" class="navbar__link" data-section="about">About</a></li>
+            <li><a href="#skills" class="navbar__link" data-section="skills">Skills</a></li>
+            <li><a href="#projects" class="navbar__link" data-section="projects">Projects</a></li>
+            <li><a href="#contact" class="navbar__link" data-section="contact">Contact</a></li>
+        </ul>
+        <div class="navbar__actions">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
+                <i class="fas fa-moon" id="themeIcon"></i>
+            </button>
+            <a href="{{ url_for('static', filename='resume/resume.pdf') }}" class="btn btn--sm btn--outline" download id="resumeBtn">
+                <i class="fas fa-download"></i> Resume
+            </a>
+            <button class="navbar__burger" id="navBurger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════
+     HERO SECTION
+     ═══════════════════════════════════════════════ -->
+<section class="hero" id="hero">
+    <div class="hero__bg-effects">
+        <div class="hero__orb hero__orb--1"></div>
+        <div class="hero__orb hero__orb--2"></div>
+        <div class="hero__orb hero__orb--3"></div>
+        <div class="hero__grid"></div>
+    </div>
+    <div class="hero__container">
+        <div class="hero__content">
+            <div class="hero__portrait animate-on-scroll">
+                <img src="{{ url_for('static', filename='images/dp.jpg') }}" alt="Mahmudunnabi Fahim portrait" class="hero__portrait-img">
+            </div>
+            <p class="hero__greeting animate-on-scroll">
+                <span class="hero__wave">👋</span> Hello, I'm
+            </p>
+            <h1 class="hero__name animate-on-scroll">
+                Mahmudunnabi<br><span class="hero__name--accent">Fahim</span>
+            </h1>
+            <div class="hero__typewriter animate-on-scroll">
+                <span class="hero__typewriter-label">I am a&nbsp;</span>
+                <span class="hero__typewriter-text" id="typewriterText"></span>
+                <span class="hero__typewriter-cursor">|</span>
+            </div>
+            <p class="hero__bio animate-on-scroll">
+                Passionate CSE student crafting elegant solutions through code.
+                I love competitive programming, full-stack development, and building
+                real-world applications that make an impact.
+            </p>
+            <div class="hero__cta animate-on-scroll">
+                <a href="#projects" class="btn btn--primary btn--lg">
+                    <i class="fas fa-rocket"></i> View My Work
+                </a>
+                <a href="#contact" class="btn btn--glass btn--lg">
+                    <i class="fas fa-envelope"></i> Get in Touch
+                </a>
+            </div>
+            <div class="hero__socials animate-on-scroll">
+                <a href="https://github.com/" target="_blank" rel="noopener" class="hero__social-link" aria-label="GitHub" id="socialGithub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://linkedin.com/" target="_blank" rel="noopener" class="hero__social-link" aria-label="LinkedIn" id="socialLinkedin">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://codeforces.com/profile/Mahmudunnabi_Fahim" target="_blank" rel="noopener" class="hero__social-link" aria-label="Codeforces" id="socialCodeforces">
+                    <i class="fas fa-code"></i>
+                </a>
+                <a href="mailto:mahmudunnabifahim3579@gmail.com" class="hero__social-link" aria-label="Email" id="socialEmail">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+        </div>
+        <div class="hero__visual animate-on-scroll">
+            <div class="hero__code-window">
+                <div class="code-window__header">
+                    <span class="code-window__dot code-window__dot--red"></span>
+                    <span class="code-window__dot code-window__dot--yellow"></span>
+                    <span class="code-window__dot code-window__dot--green"></span>
+                    <span class="code-window__title">fahim.py</span>
+                </div>
+                <pre class="code-window__body"><code><span class="code-kw">class</span> <span class="code-cls">Developer</span>:
+    <span class="code-kw">def</span> <span class="code-fn">__init__</span>(<span class="code-param">self</span>):
+        <span class="code-param">self</span>.name = <span class="code-str">"Mahmudunnabi Fahim"</span>
+        <span class="code-param">self</span>.role = <span class="code-str">"CSE Student"</span>
+        <span class="code-param">self</span>.skills = [<span class="code-str">"Python"</span>, <span class="code-str">"C++"</span>,
+                       <span class="code-str">"Java"</span>, <span class="code-str">"Flask"</span>]
+        <span class="code-param">self</span>.passion = <span class="code-str">"Building impactful software"</span>
+
+    <span class="code-kw">def</span> <span class="code-fn">say_hello</span>(<span class="code-param">self</span>):
+        <span class="code-kw">return</span> <span class="code-str">"Let's create something amazing!"</span></code></pre>
+            </div>
+        </div>
+    </div>
+    <a href="#about" class="hero__scroll-indicator" aria-label="Scroll down">
+        <div class="hero__scroll-mouse">
+            <div class="hero__scroll-wheel"></div>
+        </div>
+    </a>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     ABOUT SECTION
+     ═══════════════════════════════════════════════ -->
+<section class="section about" id="about">
+    <div class="container">
+        <div class="section__header animate-on-scroll">
+            <span class="section__tag"><i class="fas fa-user"></i> About Me</span>
+            <h2 class="section__title">Get to Know Me</h2>
+            <div class="section__divider"></div>
+        </div>
+
+        <div class="about__grid">
+            <div class="about__text animate-on-scroll">
+                <p>
+                    I am a passionate <strong>Computer Science and Engineering</strong> student at
+                    <strong>Mawlana Bhashani Science and Technology University</strong> in Bangladesh,
+                    currently in my <strong>4th year</strong>. My journey in technology began with curiosity
+                    about how software systems work, and it has grown into a deep passion for building
+                    elegant, scalable applications.
+                </p>
+                <p>
+                    I thrive on solving challenging problems — from competitive programming on
+                    <strong>Codeforces</strong> to architecting full-stack web applications using
+                    <strong>Flask</strong> and the <strong>MERN stack</strong>. I believe in writing clean,
+                    maintainable code and continuously learning new technologies.
+                </p>
+                <p>
+                    My goal is to become a <strong>professional software engineer</strong> who builds
+                    impactful, real-world applications and contributes to the global open-source community.
+                </p>
+                <div class="about__info-cards">
+                    <div class="about__info-card">
+                        <i class="fas fa-graduation-cap"></i>
+                        <div>
+                            <strong>B.Sc. in CSE</strong>
+                            <span>4th Year, 1st Semester</span>
+                        </div>
+                    </div>
+                    <div class="about__info-card">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <strong>Location</strong>
+                            <span>Bangladesh</span>
+                        </div>
+                    </div>
+                    <div class="about__info-card">
+                        <i class="fas fa-code-branch"></i>
+                        <div>
+                            <strong>Focus</strong>
+                            <span>Full-Stack &amp; Algorithms</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about__timeline animate-on-scroll">
+                <h3 class="about__timeline-title"><i class="fas fa-stream"></i> My Journey</h3>
+                <div class="timeline">
+                    {% for item in timeline %}
+                    <div class="timeline__item">
+                        <div class="timeline__marker">
+                            <i class="{{ item.icon }}"></i>
+                        </div>
+                        <div class="timeline__content">
+                            <span class="timeline__year">{{ item.year }}</span>
+                            <h4 class="timeline__heading">{{ item.title }}</h4>
+                            <p>{{ item.description }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SKILLS SECTION
+     ═══════════════════════════════════════════════ -->
+<section class="section skills" id="skills">
+    <div class="container">
+        <div class="section__header animate-on-scroll">
+            <span class="section__tag"><i class="fas fa-cogs"></i> Skills</span>
+            <h2 class="section__title">Technologies I Work With</h2>
+            <div class="section__divider"></div>
+        </div>
+
+        <div class="skills__tabs animate-on-scroll">
+            <button class="skills__tab active" data-tab="languages" id="tabLanguages">
+                <i class="fas fa-terminal"></i> Languages
+            </button>
+            <button class="skills__tab" data-tab="web" id="tabWeb">
+                <i class="fas fa-globe"></i> Web & Frameworks
+            </button>
+            <button class="skills__tab" data-tab="tools" id="tabTools">
+                <i class="fas fa-tools"></i> Tools
+            </button>
+            <button class="skills__tab" data-tab="concepts" id="tabConcepts">
+                <i class="fas fa-lightbulb"></i> Concepts
+            </button>
+        </div>
+
+        {% for category, items in skills.items() %}
+        <div class="skills__panel {% if loop.first %}active{% endif %}" id="panel-{{ category }}">
+            <div class="skills__grid">
+                {% for skill in items %}
+                <div class="skill-card animate-on-scroll">
+                    <div class="skill-card__icon">
+                        <i class="{{ skill.icon }}"></i>
+                    </div>
+                    <h4 class="skill-card__name">{{ skill.name }}</h4>
+                    <div class="skill-card__bar">
+                        <div class="skill-card__fill" data-level="{{ skill.level }}">
+                            <span class="skill-card__percent">{{ skill.level }}%</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     PROJECTS SECTION
+     ═══════════════════════════════════════════════ -->
+<section class="section projects" id="projects">
+    <div class="container">
+        <div class="section__header animate-on-scroll">
+            <span class="section__tag"><i class="fas fa-rocket"></i> Projects</span>
+            <h2 class="section__title">What I've Built</h2>
+            <div class="section__divider"></div>
+        </div>
+
+        <div class="projects__grid">
+            {% for project in projects %}
+            <div class="project-card animate-on-scroll" id="projectCard{{ loop.index }}">
+                <div class="project-card__header">
+                    <div class="project-card__icon">
+                        <i class="{{ project.icon if project.icon is defined and project.icon else 'fas fa-code' }}"></i>
+                    </div>
+                    <div class="project-card__links">
+                        {% if project.github_url is defined and project.github_url %}
+                        <a href="{{ project.github_url }}" target="_blank" rel="noopener" class="project-card__link" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        {% endif %}
+                        {% if project.live_url is defined and project.live_url %}
+                        <a href="{{ project.live_url }}" target="_blank" rel="noopener" class="project-card__link" aria-label="Live Demo">
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+                <h3 class="project-card__title">{{ project.title }}</h3>
+                <p class="project-card__desc">{{ project.description }}</p>
+                <div class="project-card__tags">
+                    {% set techs = project.tech_list if project.tech_list is defined else project.technologies.split(',') %}
+                    {% for tech in techs %}
+                    <span class="project-card__tag">{{ tech.strip() }}</span>
+                    {% endfor %}
+                </div>
+                <button class="btn btn--ghost btn--sm project-card__details-btn"
+                        data-title="{{ project.title }}"
+                        data-description="{{ project.description }}"
+                        data-techs="{{ project.technologies if project.technologies is string else ','.join(project.tech_list) }}"
+                        id="detailsBtn{{ loop.index }}">
+                    <i class="fas fa-info-circle"></i> Details
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- GitHub Repos (loaded dynamically) -->
+        <div class="github-repos animate-on-scroll" id="githubRepos" style="display:none;">
+            <h3 class="github-repos__title">
+                <i class="fab fa-github"></i> Latest from GitHub
+            </h3>
+            <div class="github-repos__grid" id="githubReposGrid"></div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     ACHIEVEMENTS SECTION
+     ═══════════════════════════════════════════════ -->
+<section class="section achievements" id="achievements">
+    <div class="container">
+        <div class="section__header animate-on-scroll">
+            <span class="section__tag"><i class="fas fa-trophy"></i> Achievements</span>
+            <h2 class="section__title">Milestones & Goals</h2>
+            <div class="section__divider"></div>
+        </div>
+        <div class="achievements__grid">
+            <div class="achievement-card animate-on-scroll">
+                <div class="achievement-card__icon"><i class="fas fa-code"></i></div>
+                <h4>Competitive Programmer</h4>
+                <p>Active problem solver on Codeforces with a strong algorithmic mindset.</p>
+            </div>
+            <div class="achievement-card animate-on-scroll">
+                <div class="achievement-card__icon"><i class="fas fa-laptop-code"></i></div>
+                <h4>Full-Stack Projects</h4>
+                <p>Built multiple end-to-end applications using Python, Java, and web technologies.</p>
+            </div>
+            <div class="achievement-card animate-on-scroll">
+                <div class="achievement-card__icon"><i class="fas fa-bullseye"></i></div>
+                <h4>Aspiring Engineer</h4>
+                <p>Working towards becoming a professional software engineer contributing to large-scale systems.</p>
+            </div>
+            <div class="achievement-card animate-on-scroll">
+                <div class="achievement-card__icon"><i class="fab fa-github"></i></div>
+                <h4>Open Source Contributor</h4>
+                <p>Aiming to contribute to impactful open-source projects and communities.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     CONTACT SECTION
+     ═══════════════════════════════════════════════ -->
+<section class="section contact" id="contact">
+    <div class="container">
+        <div class="section__header animate-on-scroll">
+            <span class="section__tag"><i class="fas fa-envelope"></i> Contact</span>
+            <h2 class="section__title">Let's Connect</h2>
+            <div class="section__divider"></div>
+        </div>
+
+        <div class="contact__grid">
+            <div class="contact__info animate-on-scroll">
+                <h3>Get in Touch</h3>
+                <p>
+                    I'm always open to discussing new projects, collaborations,
+                    or opportunities. Feel free to reach out!
+                </p>
+                <div class="contact__details">
+                    <div class="contact__detail">
+                        <div class="contact__detail-icon"><i class="fas fa-envelope"></i></div>
+                        <div>
+                            <strong>Email</strong>
+                            <a href="mailto:mahmudunnabifahim3579@gmail.com">mahmudunnabifahim3579@gmail.com</a>
+                        </div>
+                    </div>
+                    <div class="contact__detail">
+                        <div class="contact__detail-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div>
+                            <strong>Location</strong>
+                            <span>Bangladesh</span>
+                        </div>
+                    </div>
+                    <div class="contact__detail">
+                        <div class="contact__detail-icon"><i class="fas fa-university"></i></div>
+                        <div>
+                            <strong>University</strong>
+                            <span>MBSTU, Tangail</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact__socials">
+                    <a href="https://github.com/" target="_blank" rel="noopener" class="contact__social" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/" target="_blank" rel="noopener" class="contact__social" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://codeforces.com/profile/Mahmudunnabi_Fahim" target="_blank" rel="noopener" class="contact__social" aria-label="Codeforces"><i class="fas fa-code"></i></a>
+                    <a href="mailto:mahmudunnabifahim3579@gmail.com" class="contact__social" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+
+            <form class="contact__form animate-on-scroll" action="{{ url_for('contact.send_message') }}" method="POST" id="contactForm">
+                <div class="form-group">
+                    <label for="contactName">Full Name</label>
+                    <div class="form-input-wrap">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="contactName" name="name" placeholder="Your Name" required minlength="2" autocomplete="name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="contactEmail">Email Address</label>
+                    <div class="form-input-wrap">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="contactEmail" name="email" placeholder="you@example.com" required autocomplete="email">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="contactSubject">Subject</label>
+                    <div class="form-input-wrap">
+                        <i class="fas fa-tag"></i>
+                        <input type="text" id="contactSubject" name="subject" placeholder="What's this about?" required minlength="3">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="contactMessage">Message</label>
+                    <div class="form-input-wrap form-input-wrap--textarea">
+                        <i class="fas fa-comment-dots"></i>
+                        <textarea id="contactMessage" name="message" rows="5" placeholder="Write your message here..." required minlength="10"></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn--primary btn--lg btn--full" id="contactSubmit">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════════ -->
+<footer class="footer" id="footer">
+    <div class="container">
+        <div class="footer__content">
+            <div class="footer__brand">
+                <span class="navbar__logo-bracket">&lt;</span>Fahim<span class="navbar__logo-slash"> /</span><span class="navbar__logo-bracket">&gt;</span>
+                <p>Building the future, one line of code at a time.</p>
+            </div>
+            <div class="footer__links">
+                <a href="#hero">Home</a>
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <p>&copy; 2025 Mahmudunnabi Fahim. Crafted with <i class="fas fa-heart" style="color: var(--accent-primary);"></i> and Flask.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- ═══════ PROJECT DETAILS MODAL ═══════ -->
+<div class="modal" id="projectModal">
+    <div class="modal__overlay" id="modalOverlay"></div>
+    <div class="modal__content">
+        <button class="modal__close" id="modalClose" aria-label="Close modal">&times;</button>
+        <div class="modal__icon"><i class="fas fa-code"></i></div>
+        <h3 class="modal__title" id="modalTitle">Project Title</h3>
+        <p class="modal__desc" id="modalDesc">Project description goes here.</p>
+        <div class="modal__tags" id="modalTags"></div>
+    </div>
+</div>
+
+<!-- Back to Top -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <i class="fas fa-chevron-up"></i>
+</button>
+{% endblock %}

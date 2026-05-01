@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard — Portfolio{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* ── Admin-only overrides ─────────────── */
+    .admin { padding: 2rem 1rem; min-height: 100vh; background: var(--bg-primary); }
+    .admin__header { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:2rem; }
+    .admin__header h1 { font-size:1.8rem; color: var(--text-primary); }
+    .admin__stats { display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:2rem; }
+    .stat-card { flex:1; min-width:180px; padding:1.25rem; border-radius:12px; background: var(--bg-card); border:1px solid var(--border); }
+    .stat-card__value { font-size:2rem; font-weight:800; background:var(--gradient-primary); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .stat-card__label { color: var(--text-secondary); font-size:.85rem; margin-top:.25rem; }
+    .admin-section { background: var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:1.5rem; margin-bottom:2rem; }
+    .admin-section__title { font-size:1.25rem; margin-bottom:1rem; color: var(--text-primary); display:flex; align-items:center; gap:.5rem; }
+    .msg-row { display:flex; align-items:flex-start; gap:1rem; padding:1rem; border-bottom:1px solid var(--border); flex-wrap:wrap; }
+    .msg-row:last-child { border-bottom:none; }
+    .msg-row.unread { background: rgba(var(--accent-primary-rgb), .06); border-radius:8px; }
+    .msg-meta { flex:1; min-width:200px; }
+    .msg-meta strong { color: var(--text-primary); }
+    .msg-meta small { color: var(--text-muted); display:block; margin-top:.25rem; }
+    .msg-body { flex:2; min-width:200px; color: var(--text-secondary); }
+    .msg-actions { display:flex; gap:.5rem; align-items:center; }
+    .project-row { display:flex; align-items:center; gap:1rem; padding:.75rem 0; border-bottom:1px solid var(--border); flex-wrap:wrap; }
+    .project-row:last-child { border-bottom:none; }
+    .project-row__info { flex:1; min-width:200px; }
+    .project-row__info strong { color: var(--text-primary); }
+    .project-row__info small { color: var(--text-muted); }
+    .add-form { display:grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap:1rem; padding-top:1rem; border-top:1px solid var(--border); margin-top:1rem; }
+    .add-form .btn { grid-column: 1 / -1; justify-self:start; }
+    .admin-table-empty { color: var(--text-muted); text-align:center; padding:2rem; }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="admin">
+    <div class="container">
+        <!-- Header -->
+        <div class="admin__header">
+            <h1><i class="fas fa-tachometer-alt"></i> Admin Dashboard</h1>
+            <div style="display:flex;gap:.75rem;align-items:center;">
+                <a href="{{ url_for('main.index') }}" class="btn btn--ghost btn--sm"><i class="fas fa-home"></i> Portfolio</a>
+                <a href="{{ url_for('admin.logout') }}" class="btn btn--outline btn--sm"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="admin__stats">
+            <div class="stat-card">
+                <div class="stat-card__value">{{ messages|length }}</div>
+                <div class="stat-card__label">Total Messages</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card__value">{{ unread_count }}</div>
+                <div class="stat-card__label">Unread Messages</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card__value">{{ projects|length }}</div>
+                <div class="stat-card__label">Projects</div>
+            </div>
+        </div>
+
+        <!-- Messages -->
+        <div class="admin-section" id="messages">
+            <h2 class="admin-section__title"><i class="fas fa-envelope"></i> Messages</h2>
+            {% if messages %}
+                {% for msg in messages %}
+                <div class="msg-row {% if not msg.is_read %}unread{% endif %}">
+                    <div class="msg-meta">
+                        <strong>{{ msg.name }}</strong>
+                        <small>{{ msg.email }} · {{ msg.created_at.strftime('%b %d, %Y %H:%M') if msg.created_at else '' }}</small>
+                        <small><em>{{ msg.subject }}</em></small>
+                    </div>
+                    <div class="msg-body">{{ msg.message }}</div>
+                    <div class="msg-actions">
+                        {% if not msg.is_read %}
+                        <form method="POST" action="{{ url_for('admin.mark_read', msg_id=msg.id) }}">
+                            <button class="btn btn--ghost btn--sm" title="Mark as read"><i class="fas fa-check"></i></button>
+                        </form>
+                        {% endif %}
+                        <form method="POST" action="{{ url_for('admin.delete_message', msg_id=msg.id) }}" onsubmit="return confirm('Delete this message?')">
+                            <button class="btn btn--ghost btn--sm" style="color:var(--danger)" title="Delete"><i class="fas fa-trash"></i></button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p class="admin-table-empty">No messages yet.</p>
+            {% endif %}
+        </div>
+
+        <!-- Projects -->
+        <div class="admin-section" id="projects">
+            <h2 class="admin-section__title"><i class="fas fa-folder-open"></i> Projects</h2>
+
+            {% for project in projects %}
+            <div class="project-row">
+                <div class="project-row__info">
+                    <strong><i class="{{ project.icon }}"></i> {{ project.title }}</strong>
+                    <small>{{ project.technologies }} · Order: {{ project.sort_order }}</small>
+                </div>
+                <div class="msg-actions">
+                    <form method="POST" action="{{ url_for('admin.delete_project', project_id=project.id) }}" onsubmit="return confirm('Delete this project?')">
+                        <button class="btn btn--ghost btn--sm" style="color:var(--danger)"><i class="fas fa-trash"></i></button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+
+            {% if not projects %}
+            <p class="admin-table-empty">No custom projects. Default projects are shown on the portfolio.</p>
+            {% endif %}
+
+            <!-- Add Project Form -->
+            <form method="POST" action="{{ url_for('admin.add_project') }}" class="add-form">
+                <div class="form-group">
+                    <label for="projTitle">Title</label>
+                    <div class="form-input-wrap"><i class="fas fa-heading"></i>
+                        <input type="text" id="projTitle" name="title" placeholder="Project Title" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="projTech">Technologies</label>
+                    <div class="form-input-wrap"><i class="fas fa-tags"></i>
+                        <input type="text" id="projTech" name="technologies" placeholder="Python, Flask, SQLite" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="projIcon">Icon Class</label>
+                    <div class="form-input-wrap"><i class="fas fa-icons"></i>
+                        <input type="text" id="projIcon" name="icon" placeholder="fas fa-code" value="fas fa-code">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="projGithub">GitHub URL</label>
+                    <div class="form-input-wrap"><i class="fab fa-github"></i>
+                        <input type="url" id="projGithub" name="github_url" placeholder="https://github.com/...">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="projLive">Live URL</label>
+                    <div class="form-input-wrap"><i class="fas fa-link"></i>
+                        <input type="url" id="projLive" name="live_url" placeholder="https://...">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="projOrder">Sort Order</label>
+                    <div class="form-input-wrap"><i class="fas fa-sort"></i>
+                        <input type="number" id="projOrder" name="sort_order" value="0">
+                    </div>
+                </div>
+                <div class="form-group" style="grid-column:1/-1;">
+                    <label for="projDesc">Description</label>
+                    <div class="form-input-wrap form-input-wrap--textarea"><i class="fas fa-align-left"></i>
+                        <textarea id="projDesc" name="description" rows="3" placeholder="Project description..." required></textarea>
+                    </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:1rem;">
+                    <label style="display:flex;align-items:center;gap:.5rem;color:var(--text-secondary);">
+                        <input type="checkbox" name="is_featured" checked> Featured
+                    </label>
+                    <button type="submit" class="btn btn--primary btn--sm"><i class="fas fa-plus"></i> Add Project</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
